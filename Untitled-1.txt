@@ -1,0 +1,434 @@
+Now need to conform the code to do this as stated in MS Docs, make sure to provide the complete code:
+
+[Step 1]: Find the isochronous pipe in the active setting (Already accomplished):
+Get the USB interface that has the isochronous endpoints by calling `WinUsb_QueryInterfaceSettings`.
+Enumerate the pipes of the interface setting that defines the endpoints.
+For each endpoint get the associated pipe properties in a `WINUSB_PIPE_INFORMATION_EX` structure by calling `WinUsb_QueryPipeEx`. The retrieved `WINUSB_PIPE_INFORMATION_EX` structure that contains information about the isochronous pipe. The structure contains information about the pipe, its type, id, and so on.
+Check the structure members to determine whether it's the pipe that must be used for transfers. If it is, store the PipeId value. In the template code, add members to the `DEVICE_DATA` structure.
+
+
+
+
+This example shows how to determine whether the active setting has isochronous endpoints and obtain information about them.:
+
+
+typedef struct _DEVICE_DATA {
+
+    BOOL                    HandlesOpen;
+    WINUSB_INTERFACE_HANDLE WinusbHandle;
+    HANDLE                  DeviceHandle;
+    TCHAR                   DevicePath[MAX_PATH];
+    UCHAR                   IsochOutPipe;
+    UCHAR                   IsochInPipe;
+
+} DEVICE_DATA, *PDEVICE_DATA;
+
+HRESULT
+       GetIsochPipes(
+       _Inout_ PDEVICE_DATA DeviceData
+       )
+{
+       BOOL result;
+       USB_INTERFACE_DESCRIPTOR usbInterface;
+       WINUSB_PIPE_INFORMATION_EX pipe;
+       HRESULT hr = S_OK;
+       UCHAR i;
+
+       result = WinUsb_QueryInterfaceSettings(DeviceData->WinusbHandle, 0, &usbInterface);
+
+       if (result == FALSE)
+       {
+              hr = HRESULT_FROM_WIN32(GetLastError());
+              printf(_T("WinUsb_QueryInterfaceSettings failed to get USB interface.\n"));
+              CloseHandle(DeviceData->DeviceHandle);
+              return hr;
+       }
+
+       for (i = 0; i < usbInterface.bNumEndpoints; i++)
+       {
+              result = WinUsb_QueryPipeEx(
+                     DeviceData->WinusbHandle,
+                     1,
+                     (UCHAR) i,
+                     &pipe);
+
+              if (result == FALSE)
+              {
+                     hr = HRESULT_FROM_WIN32(GetLastError());
+                     printf(_T("WinUsb_QueryPipeEx failed to get USB pipe.\n"));
+                     CloseHandle(DeviceData->DeviceHandle);
+                     return hr;
+              }
+
+              if ((pipe.PipeType == UsbdPipeTypeIsochronous) && (!(pipe.PipeId == 0x80)))
+              {
+                     DeviceData->IsochOutPipe = pipe.PipeId;
+              }
+              else if (pipe.PipeType == UsbdPipeTypeIsochronous)
+              {
+                     DeviceData->IsochInPipe = pipe.PipeId;
+              }
+       }
+
+       return hr;
+}
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+
+
+[Step 2]: Get interval information about the isochronous pipe (Already accomplished):
+Next, get more information about the pipe that you obtained in call to `WinUsb_QueryPipeEx`.
+
+Transfer size:
+From the retrieved `WINUSB_PIPE_INFORMATION_EX` structure, obtain the `MaximumBytesPerInterval` and Interval values.
+Depending on the amount of isochronous data you want to send or receive, calculate the transfer size. For example, consider this calculation:
+TransferSize = ISOCH_DATA_SIZE_MS * pipeInfoEx.MaximumBytesPerInterval * (8 / pipeInfoEx.Interval);
+
+In the example, transfer size is calculated for 10 milliseconds of isochronous data.
+
+Number of isochronous packetsFor example, consider this calculation:
+
+To calculate the total number of isochronous packets required to hold the entire transfer. This information is required for read transfers and calculated as, >IsochInTransferSize / pipe.MaximumBytesPerInterval;.
+
+```
+#define ISOCH_DATA_SIZE_MS   10
+
+typedef struct _DEVICE_DATA {
+
+    BOOL                    HandlesOpen;
+    WINUSB_INTERFACE_HANDLE WinusbHandle;
+    HANDLE                  DeviceHandle;
+    TCHAR                   DevicePath[MAX_PATH];
+    UCHAR                   IsochOutPipe;
+    UCHAR                   IsochInPipe;
+    ULONG                   IsochInTransferSize;
+    ULONG                   IsochOutTransferSize;
+    ULONG                   IsochInPacketCount;
+
+} DEVICE_DATA, *PDEVICE_DATA;
+
+
+...
+
+if ((pipe.PipeType == UsbdPipeTypeIsochronous) && (!(pipe.PipeId == 0x82)))  // <-------- Need to make sure to hardcode the IN-Endpoint here!.
+{
+       DeviceData->IsochOutPipe = pipe.PipeId;
+
+       if ((pipe.MaximumBytesPerInterval == 0) || (pipe.Interval == 0))
+       {
+         hr = E_INVALIDARG;
+             printf("Isoch Out: MaximumBytesPerInterval or Interval value is 0.\n");
+             CloseHandle(DeviceData->DeviceHandle);
+             return hr;
+       }
+       else
+       {
+             DeviceData->IsochOutTransferSize = ISOCH_DATA_SIZE_MS * pipe.MaximumBytesPerInterval * (8 / pipe.Interval);
+             std::cout << "Isochronous Out Pipe Transfer Size: " << DeviceData->IsochOutTransferSize << std::endl;
+
+       }
+}
+else if (pipe.PipeType == UsbdPipeTypeIsochronous)
+{
+       DeviceData->IsochInPipe = pipe.PipeId;
+
+       if (pipe.MaximumBytesPerInterval == 0 || (pipe.Interval == 0))
+       {
+         hr = E_INVALIDARG;
+             printf("Isoch Out: MaximumBytesPerInterval or Interval value is 0.\n");
+             CloseHandle(DeviceData->DeviceHandle);
+             return hr;
+       }
+       else
+       {
+             DeviceData->IsochInTransferSize = ISOCH_DATA_SIZE_MS * pipe.MaximumBytesPerInterval * (8 / pipe.Interval);
+             // Dynamically calculate the packet count
+             DeviceData->IsochInPacketCount = DeviceData->IsochInTransferSize / pipe.MaximumBytesPerInterval;
+            std::cout << "Isochronous In Pipe Transfer Size: " << DeviceData->IsochInTransferSize << std::endl;
+            std::cout << "Isochronous In Pipe Packet Count: " << DeviceData->IsochInPacketCount << std::endl;
+       }
+}
+...
+```
+
+``````````````````````````````````````````````````````````````
+
+
+[Step 3]: Send a read transfer to receive data from an isochronous IN endpoint. (Not accomplished, need to form this objective):
+This procedure summarizes the steps for reading data from an isochronous endpoint:
+
+1): Allocate a transfer buffer that will receive data at the end of the transfer. The size of the buffer must be based on the transfer size calculation from `IsochOutTransferSize`. The transfer buffer must end at a frame boundary.
+
+2): Register the buffer by calling `WinUsb_RegisterIsochBuffer`.
+
+3): Based on the number isochronous packets calculation in `IsochInPacketCount`, allocate an array of isochronous packets in the form of `USBD_ISO_PACKET_DESCRIPTOR`.
+
+4): Start the transfer request by calling `WinUsb_ReadIsochPipeAsap`. 
+
+5): Obtain the result data from the transfer request by calling the function `WinUsb_GetOverlappedResult`.
+
+6): When finished, release the buffer handle by calling `WinUsb_UnregisterIsochBuffer`, the overlapped event handle, the array of isochronous packets, and the transfer buffer.
+
+Here is an example that shows how to send a read transfer by calling `WinUsb_ReadIsochPipeAsap`, remove the `WinUsb_ReadIsochPipe` function as it won't be utilized.
+
+
+```
+
+#define ISOCH_TRANSFER_COUNT   3
+
+VOID
+    SendIsochInTransfer(
+    _Inout_ PDEVICE_DATA DeviceData,
+    _In_ BOOL AsapTransfer
+    )
+{
+    PUCHAR readBuffer;
+    LPOVERLAPPED overlapped;
+    ULONG numBytes;
+    BOOL result;
+    DWORD lastError;
+    WINUSB_ISOCH_BUFFER_HANDLE isochReadBufferHandle;
+    PUSBD_ISO_PACKET_DESCRIPTOR isochPackets;
+    ULONG i;
+    ULONG j;
+
+    ULONG frameNumber;
+    ULONG startFrame;
+    LARGE_INTEGER timeStamp;
+
+    ULONG totalTransferSize;
+
+    readBuffer = NULL;
+    isochPackets = NULL;
+    overlapped = NULL;
+    isochReadBufferHandle = INVALID_HANDLE_VALUE;
+
+    printf(_T("\n\nRead transfer.\n"));
+
+    totalTransferSize = DeviceData->IsochInTransferSize * ISOCH_TRANSFER_COUNT;
+
+    if (totalTransferSize % DeviceData->IsochInBytesPerFrame != 0)
+    {
+        printf(_T("Transfer size must end at a frame boundary.\n"));
+        goto Error;
+    }
+
+    readBuffer = new UCHAR[totalTransferSize];
+
+    if (readBuffer == NULL)
+    {
+        printf(_T("Unable to allocate memory.\n"));
+        goto Error;
+    }
+
+    ZeroMemory(readBuffer, totalTransferSize);
+
+    overlapped = new OVERLAPPED[ISOCH_TRANSFER_COUNT];
+    ZeroMemory(overlapped, (sizeof(OVERLAPPED) * ISOCH_TRANSFER_COUNT));
+
+    for (i = 0; i < ISOCH_TRANSFER_COUNT; i++)
+    {
+        overlapped[i].hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+
+        if (overlapped[i].hEvent == NULL)
+        {
+            printf("Unable to set event for overlapped operation.\n");
+            goto Error;
+        }
+    }
+
+    isochPackets = new USBD_ISO_PACKET_DESCRIPTOR[DeviceData->IsochInPacketCount * ISOCH_TRANSFER_COUNT];
+    ZeroMemory(isochPackets, DeviceData->IsochInPacketCount * ISOCH_TRANSFER_COUNT);
+
+    result = WinUsb_RegisterIsochBuffer(
+        DeviceData->WinusbHandle,
+        DeviceData->IsochInPipe,
+        readBuffer,
+        DeviceData->IsochInTransferSize * ISOCH_TRANSFER_COUNT,
+        &isochReadBufferHandle);
+
+    if (!result)
+    {
+        printf(_T("Isoch buffer registration failed.\n"));
+        goto Error;
+    }
+
+    result = WinUsb_GetCurrentFrameNumber(DeviceData->WinusbHandle, &frameNumber,&timeStamp);
+
+    if (!result)
+    {
+        printf(_T("WinUsb_GetCurrentFrameNumber failed.\n"));
+        goto Error;
+    }
+
+    startFrame = frameNumber + 5;
+
+    for (i = 0; i < ISOCH_TRANSFER_COUNT; i++)
+    {
+        if (AsapTransfer)
+        {
+            result = WinUsb_ReadIsochPipeAsap(
+                isochReadBufferHandle,
+                DeviceData->IsochInTransferSize * i,
+                DeviceData->IsochInTransferSize,
+                (i == 0) ? FALSE : TRUE,
+                DeviceData->IsochInPacketCount,
+                &isochPackets[i * DeviceData->IsochInPacketCount],
+                &overlapped[i]);
+
+            printf("Read transfer sent by using ASAP flag.\n");
+        }
+        else
+        {
+            printf("Transfer starting at frame %d.\n", startFrame);
+
+            result = WinUsb_ReadIsochPipe(
+                isochReadBufferHandle,
+                DeviceData->IsochInTransferSize * i,
+                DeviceData->IsochInTransferSize,
+                &startFrame,
+                DeviceData->IsochInPacketCount,
+                &isochPackets[i * DeviceData->IsochInPacketCount],
+                &overlapped[i]);
+
+            printf("Next transfer frame %d.\n", startFrame);
+        }
+
+        if (!result)
+        {
+            lastError = GetLastError();
+
+            if (lastError != ERROR_IO_PENDING)
+            {
+                printf("Failed to start a read operation with error %x\n", lastError);
+            }
+        }
+    }
+
+    for (i = 0; i < ISOCH_TRANSFER_COUNT; i++)
+    {
+        result = WinUsb_GetOverlappedResult(
+            DeviceData->WinusbHandle,
+            &overlapped[i],
+            &numBytes,
+            TRUE);
+
+        if (!result)
+        {
+            lastError = GetLastError();
+
+            printf("Failed to read with error %x\n", lastError);
+        }
+        else
+        {
+            numBytes = 0;
+            for (j = 0; j < DeviceData->IsochInPacketCount; j++)
+            {
+                numBytes += isochPackets[j].Length;
+            }
+
+            printf("Requested %d bytes in %d packets per transfer.\n", DeviceData->IsochInTransferSize, DeviceData->IsochInPacketCount);
+        }
+
+        printf("Transfer %d completed. Read %d bytes. \n\n", i+1, numBytes);
+    }
+
+Error:
+    if (isochReadBufferHandle != INVALID_HANDLE_VALUE)
+    {
+        result = WinUsb_UnregisterIsochBuffer(isochReadBufferHandle);
+        if (!result)
+        {
+            printf(_T("Failed to unregister isoch read buffer. \n"));
+        }
+    }
+
+    if (readBuffer != NULL)
+    {
+        delete [] readBuffer;
+    }
+
+    if (isochPackets != NULL)
+    {
+        delete [] isochPackets;
+    }
+
+    for (i = 0; i < ISOCH_TRANSFER_COUNT; i++)
+    {
+        if (overlapped[i].hEvent != NULL)
+        {
+            CloseHandle(overlapped[i].hEvent);
+        }
+    }
+
+    if (overlapped != NULL)
+    {
+        delete [] overlapped;
+    }
+    return;
+}
+
+```
+
+If it might help here are the syntaxes from the example code above, to explain further how the syntaxes are used to avoid confusion on how the example code above works:
+
+The `WinUsb_RegisterIsochBuffer` function registers a buffer to be used for isochronous transfers:
+
+```
+BOOL WinUsb_RegisterIsochBuffer(
+  [in]  WINUSB_INTERFACE_HANDLE     InterfaceHandle,
+  [in]  UCHAR                       PipeID,
+  [in]  PUCHAR                      Buffer,
+  [in]  ULONG                       BufferLength,
+  [out] PWINUSB_ISOCH_BUFFER_HANDLE IsochBufferHandle
+);
+```
+
+The `USBD_ISO_PACKET_DESCRIPTOR structure` is used by USB client drivers to describe an isochronous transfer packet:
+
+```
+typedef struct _USBD_ISO_PACKET_DESCRIPTOR {
+  ULONG       Offset;
+  ULONG       Length;
+  USBD_STATUS Status;
+} USBD_ISO_PACKET_DESCRIPTOR, *PUSBD_ISO_PACKET_DESCRIPTOR;
+```
+
+The `WinUsb_ReadIsochPipeAsap` function submits a request that reads data from an isochronous IN endpoint:
+
+```
+BOOL WinUsb_ReadIsochPipeAsap(
+  [in]           WINUSB_ISOCH_BUFFER_HANDLE  BufferHandle,
+  [in]           ULONG                       Offset,
+  [in]           ULONG                       Length,
+  [in]           BOOL                        ContinueStream,
+  [in]           ULONG                       NumberOfPackets,
+                 PUSBD_ISO_PACKET_DESCRIPTOR IsoPacketDescriptors,
+  [in, optional] LPOVERLAPPED                Overlapped
+);
+```
+
+The `WinUsb_GetOverlappedResult` function retrieves the results of an overlapped operation on the specified file:
+
+```
+BOOL WinUsb_GetOverlappedResult(
+  [in]  WINUSB_INTERFACE_HANDLE InterfaceHandle,
+  [in]  LPOVERLAPPED            lpOverlapped,
+  [out] LPDWORD                 lpNumberOfBytesTransferred,
+  [in]  BOOL                    bWait
+);
+```
+
+The `WinUsb_UnregisterIsochBuffer` function releases all of the resources that `WinUsb_RegisterIsochBuffer` allocated for isochronous transfers. This is a synchronous operation:
+
+```
+BOOL WinUsb_UnregisterIsochBuffer(
+  [in] WINUSB_ISOCH_BUFFER_HANDLE IsochBufferHandle
+);
+```

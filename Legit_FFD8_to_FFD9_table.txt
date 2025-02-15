@@ -1,0 +1,748 @@
+F:\AI_Componets\WinUSB\main_test_legit>main.exe
+
+Device found: VID_EBA4&PID_7588; bcdUsb 0200
+
+Initiating: `WinUsb_GetAssociatedInterface`
+`WinUsb_GetAssociatedInterface` has been Initiated.
+
+Initiating: `WinUsb_QueryInterfaceSettings`
+`WinUsb_QueryInterfaceSettings` has been Initiated.
+
+Initiating: `WinUsb_SetCurrentAlternateSetting`
+`WinUsb_SetCurrentAlternateSetting` has been Initiated.
+
+Isochronous `IN` Pipe ID: [ 130 ]
+Isochronous `IN` MaximumBytesPerInterval Size: 3072
+Isochronous `IN` Pipe Total Transfer Size (with requested capture time): 491520
+Isochronous `IN` Pipe Total Packet Count (Microframes Per Transfer): 160
+Isochronous `IN` Pipe Total Packet Count (Total Microframes): 160
+Total Transfer Size WITH requested repeat amount: 491520
+
+Isochronous Requested Capture Time: 20ms.
+Isochronous Requested repeated amount: 1
+
+Initiating WinUSB:
+Calling: `WinUsb_RegisterIsochBuffer`
+`WinUsb_SetCurrentAlternateSetting` has been Initiated.
+
+Transfer starting at frame 215854345.
+Calling: `WinUsb_ReadIsochPipe` and `key_num` is: 0
+
+`WinUsb_ReadIsochPipe` has been Initiated. `key_num` is: 0
+Next transfer frame 215854365.
+
+`Break Initiated. `key_num` is: 1
+
+Transfer 0, Packet 0:
+  Offset: 0
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 1:
+  Offset: 3072
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 2:
+  Offset: 6144
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 3:
+  Offset: 9216
+  Length: 0
+  Status: 0
+Transfer 0, Packet 4:
+  Offset: 12288
+  Length: 0
+  Status: 0
+Transfer 0, Packet 5:
+  Offset: 15360
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 6:
+  Offset: 18432
+  Length: 0
+  Status: 0
+Transfer 0, Packet 7:
+  Offset: 21504
+  Length: 0
+  Status: 0
+Transfer 0, Packet 8:
+  Offset: 24576
+  Length: 0
+  Status: 0
+Transfer 0, Packet 9:
+  Offset: 27648
+  Length: 0
+  Status: 0
+Transfer 0, Packet 10:
+  Offset: 30720
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 11:
+  Offset: 33792
+  Length: 0
+  Status: 0
+Transfer 0, Packet 12:
+  Offset: 36864
+  Length: 0
+  Status: 0
+Transfer 0, Packet 13:
+  Offset: 39936
+  Length: 0
+  Status: 0
+Transfer 0, Packet 14:
+  Offset: 43008
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 15:
+  Offset: 46080
+  Length: 0
+  Status: 0
+Transfer 0, Packet 16:
+  Offset: 49152
+  Length: 0
+  Status: 0
+Transfer 0, Packet 17:
+  Offset: 52224
+  Length: 0
+  Status: 0
+Transfer 0, Packet 18:
+  Offset: 55296
+  Length: 0
+  Status: 0
+Transfer 0, Packet 19:
+  Offset: 58368
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 20:
+  Offset: 61440
+  Length: 0
+  Status: 0
+Transfer 0, Packet 21:
+  Offset: 64512
+  Length: 0
+  Status: 0
+Transfer 0, Packet 22:
+  Offset: 67584
+  Length: 0
+  Status: 0
+Transfer 0, Packet 23:
+  Offset: 70656
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 24:
+  Offset: 73728
+  Length: 0
+  Status: 0
+Transfer 0, Packet 25:
+  Offset: 76800
+  Length: 0
+  Status: 0
+Transfer 0, Packet 26:
+  Offset: 79872
+  Length: 0
+  Status: 0
+Transfer 0, Packet 27:
+  Offset: 82944
+  Length: 0
+  Status: 0
+Transfer 0, Packet 28:
+  Offset: 86016
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 29:
+  Offset: 89088
+  Length: 0
+  Status: 0
+Transfer 0, Packet 30:
+  Offset: 92160
+  Length: 0
+  Status: 0
+Transfer 0, Packet 31:
+  Offset: 95232
+  Length: 0
+  Status: 0
+Transfer 0, Packet 32:
+  Offset: 98304
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 33:
+  Offset: 101376
+  Length: 0
+  Status: 0
+Transfer 0, Packet 34:
+  Offset: 104448
+  Length: 0
+  Status: 0
+Transfer 0, Packet 35:
+  Offset: 107520
+  Length: 0
+  Status: 0
+Transfer 0, Packet 36:
+  Offset: 110592
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 37:
+  Offset: 113664
+  Length: 0
+  Status: 0
+Transfer 0, Packet 38:
+  Offset: 116736
+  Length: 0
+  Status: 0
+Transfer 0, Packet 39:
+  Offset: 119808
+  Length: 0
+  Status: 0
+Transfer 0, Packet 40:
+  Offset: 122880
+  Length: 0
+  Status: 0
+Transfer 0, Packet 41:
+  Offset: 125952
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 42:
+  Offset: 129024
+  Length: 0
+  Status: 0
+Transfer 0, Packet 43:
+  Offset: 132096
+  Length: 0
+  Status: 0
+Transfer 0, Packet 44:
+  Offset: 135168
+  Length: 0
+  Status: 0
+Transfer 0, Packet 45:
+  Offset: 138240
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 46:
+  Offset: 141312
+  Length: 0
+  Status: 0
+Transfer 0, Packet 47:
+  Offset: 144384
+  Length: 0
+  Status: 0
+Transfer 0, Packet 48:
+  Offset: 147456
+  Length: 0
+  Status: 0
+Transfer 0, Packet 49:
+  Offset: 150528
+  Length: 0
+  Status: 0
+Transfer 0, Packet 50:
+  Offset: 153600
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 51:
+  Offset: 156672
+  Length: 0
+  Status: 0
+Transfer 0, Packet 52:
+  Offset: 159744
+  Length: 0
+  Status: 0
+Transfer 0, Packet 53:
+  Offset: 162816
+  Length: 0
+  Status: 0
+Transfer 0, Packet 54:
+  Offset: 165888
+  Length: 0
+  Status: 0
+Transfer 0, Packet 55:
+  Offset: 168960
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 56:
+  Offset: 172032
+  Length: 0
+  Status: 0
+Transfer 0, Packet 57:
+  Offset: 175104
+  Length: 0
+  Status: 0
+Transfer 0, Packet 58:
+  Offset: 178176
+  Length: 0
+  Status: 0
+Transfer 0, Packet 59:
+  Offset: 181248
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 60:
+  Offset: 184320
+  Length: 0
+  Status: 0
+Transfer 0, Packet 61:
+  Offset: 187392
+  Length: 0
+  Status: 0
+Transfer 0, Packet 62:
+  Offset: 190464
+  Length: 0
+  Status: 0
+Transfer 0, Packet 63:
+  Offset: 193536
+  Length: 0
+  Status: 0
+Transfer 0, Packet 64:
+  Offset: 196608
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 65:
+  Offset: 199680
+  Length: 0
+  Status: 0
+Transfer 0, Packet 66:
+  Offset: 202752
+  Length: 0
+  Status: 0
+Transfer 0, Packet 67:
+  Offset: 205824
+  Length: 0
+  Status: 0
+Transfer 0, Packet 68:
+  Offset: 208896
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 69:
+  Offset: 211968
+  Length: 0
+  Status: 0
+Transfer 0, Packet 70:
+  Offset: 215040
+  Length: 0
+  Status: 0
+Transfer 0, Packet 71:
+  Offset: 218112
+  Length: 0
+  Status: 0
+Transfer 0, Packet 72:
+  Offset: 221184
+  Length: 0
+  Status: 0
+Transfer 0, Packet 73:
+  Offset: 224256
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 74:
+  Offset: 227328
+  Length: 0
+  Status: 0
+Transfer 0, Packet 75:
+  Offset: 230400
+  Length: 0
+  Status: 0
+Transfer 0, Packet 76:
+  Offset: 233472
+  Length: 0
+  Status: 0
+Transfer 0, Packet 77:
+  Offset: 236544
+  Length: 0
+  Status: 0
+Transfer 0, Packet 78:
+  Offset: 239616
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 79:
+  Offset: 242688
+  Length: 0
+  Status: 0
+Transfer 0, Packet 80:
+  Offset: 245760
+  Length: 0
+  Status: 0
+Transfer 0, Packet 81:
+  Offset: 248832
+  Length: 0
+  Status: 0
+Transfer 0, Packet 82:
+  Offset: 251904
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 83:
+  Offset: 254976
+  Length: 0
+  Status: 0
+Transfer 0, Packet 84:
+  Offset: 258048
+  Length: 0
+  Status: 0
+Transfer 0, Packet 85:
+  Offset: 261120
+  Length: 0
+  Status: 0
+Transfer 0, Packet 86:
+  Offset: 264192
+  Length: 0
+  Status: 0
+Transfer 0, Packet 87:
+  Offset: 267264
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 88:
+  Offset: 270336
+  Length: 0
+  Status: 0
+Transfer 0, Packet 89:
+  Offset: 273408
+  Length: 0
+  Status: 0
+Transfer 0, Packet 90:
+  Offset: 276480
+  Length: 0
+  Status: 0
+Transfer 0, Packet 91:
+  Offset: 279552
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 92:
+  Offset: 282624
+  Length: 0
+  Status: 0
+Transfer 0, Packet 93:
+  Offset: 285696
+  Length: 0
+  Status: 0
+Transfer 0, Packet 94:
+  Offset: 288768
+  Length: 0
+  Status: 0
+Transfer 0, Packet 95:
+  Offset: 291840
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 96:
+  Offset: 294912
+  Length: 0
+  Status: 0
+Transfer 0, Packet 97:
+  Offset: 297984
+  Length: 0
+  Status: 0
+Transfer 0, Packet 98:
+  Offset: 301056
+  Length: 0
+  Status: 0
+Transfer 0, Packet 99:
+  Offset: 304128
+  Length: 0
+  Status: 0
+Transfer 0, Packet 100:
+  Offset: 307200
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 101:
+  Offset: 310272
+  Length: 0
+  Status: 0
+Transfer 0, Packet 102:
+  Offset: 313344
+  Length: 0
+  Status: 0
+Transfer 0, Packet 103:
+  Offset: 316416
+  Length: 0
+  Status: 0
+Transfer 0, Packet 104:
+  Offset: 319488
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 105:
+  Offset: 322560
+  Length: 0
+  Status: 0
+Transfer 0, Packet 106:
+  Offset: 325632
+  Length: 0
+  Status: 0
+Transfer 0, Packet 107:
+  Offset: 328704
+  Length: 0
+  Status: 0
+Transfer 0, Packet 108:
+  Offset: 331776
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 109:
+  Offset: 334848
+  Length: 0
+  Status: 0
+Transfer 0, Packet 110:
+  Offset: 337920
+  Length: 0
+  Status: 0
+Transfer 0, Packet 111:
+  Offset: 340992
+  Length: 0
+  Status: 0
+Transfer 0, Packet 112:
+  Offset: 344064
+  Length: 0
+  Status: 0
+Transfer 0, Packet 113:
+  Offset: 347136
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 114:
+  Offset: 350208
+  Length: 0
+  Status: 0
+Transfer 0, Packet 115:
+  Offset: 353280
+  Length: 0
+  Status: 0
+Transfer 0, Packet 116:
+  Offset: 356352
+  Length: 0
+  Status: 0
+Transfer 0, Packet 117:
+  Offset: 359424
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 118:
+  Offset: 362496
+  Length: 0
+  Status: 0
+Transfer 0, Packet 119:
+  Offset: 365568
+  Length: 1920
+  Status: 0
+Transfer 0, Packet 120: <------------------ [FFD9]
+  Offset: 368640
+  Length: 51
+  Status: 0
+Transfer 0, Packet 121:
+  Offset: 371712
+  Length: 0
+  Status: 0
+Transfer 0, Packet 122:
+  Offset: 374784
+  Length: 0
+  Status: 0
+Transfer 0, Packet 123:
+  Offset: 377856
+  Length: 0
+  Status: 0
+Transfer 0, Packet 124:
+  Offset: 380928
+  Length: 0
+  Status: 0
+Transfer 0, Packet 125:
+  Offset: 384000
+  Length: 0
+  Status: 0
+Transfer 0, Packet 126:
+  Offset: 387072
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 127:
+  Offset: 390144
+  Length: 0
+  Status: 0
+Transfer 0, Packet 128:
+  Offset: 393216
+  Length: 0
+  Status: 0
+Transfer 0, Packet 129:
+  Offset: 396288
+  Length: 0
+  Status: 0
+Transfer 0, Packet 130:
+  Offset: 399360
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 131:
+  Offset: 402432
+  Length: 0
+  Status: 0
+Transfer 0, Packet 132:
+  Offset: 405504
+  Length: 0
+  Status: 0
+Transfer 0, Packet 133:
+  Offset: 408576
+  Length: 0
+  Status: 0
+Transfer 0, Packet 134:
+  Offset: 411648
+  Length: 0
+  Status: 0
+Transfer 0, Packet 135:
+  Offset: 414720
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 136:
+  Offset: 417792
+  Length: 0
+  Status: 0
+Transfer 0, Packet 137:
+  Offset: 420864
+  Length: 0
+  Status: 0
+Transfer 0, Packet 138:
+  Offset: 423936
+  Length: 0
+  Status: 0
+Transfer 0, Packet 139:
+  Offset: 427008
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 140:
+  Offset: 430080
+  Length: 0
+  Status: 0
+Transfer 0, Packet 141:
+  Offset: 433152
+  Length: 0
+  Status: 0
+Transfer 0, Packet 142:
+  Offset: 436224
+  Length: 0
+  Status: 0
+Transfer 0, Packet 143:
+  Offset: 439296
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 144:
+  Offset: 442368
+  Length: 0
+  Status: 0
+Transfer 0, Packet 145:
+  Offset: 445440
+  Length: 0
+  Status: 0
+Transfer 0, Packet 146:
+  Offset: 448512
+  Length: 0
+  Status: 0
+Transfer 0, Packet 147:
+  Offset: 451584
+  Length: 0
+  Status: 0
+Transfer 0, Packet 148:
+  Offset: 454656
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 149:
+  Offset: 457728
+  Length: 0
+  Status: 0
+Transfer 0, Packet 150:
+  Offset: 460800
+  Length: 0
+  Status: 0
+Transfer 0, Packet 151:
+  Offset: 463872
+  Length: 0
+  Status: 0
+Transfer 0, Packet 152:
+  Offset: 466944
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 153:
+  Offset: 470016
+  Length: 0
+  Status: 0
+Transfer 0, Packet 154:
+  Offset: 473088
+  Length: 0
+  Status: 0
+Transfer 0, Packet 155:
+  Offset: 476160
+  Length: 0
+  Status: 0
+Transfer 0, Packet 156:
+  Offset: 479232
+  Length: 0
+  Status: 0
+Transfer 0, Packet 157:
+  Offset: 482304
+  Length: 3072
+  Status: 0
+Transfer 0, Packet 158:
+  Offset: 485376
+  Length: 0
+  Status: 0
+Transfer 0, Packet 159:
+  Offset: 488448
+  Length: 0
+  Status: 0
+`WinUsb_GetOverlappedResult` - `key_num` is: 0
+Requested 491520 bytes in 160 packets per transfer.
+Transfer 1 completed. Read 491520 bytes.
+
+`dataStart` Offset is: 0000022F77E8CFAC, `i` is: 0
+
+`bufferTracker` value is: 2660
+
+`dataStart` Offset is: 0000022F77E8DBAC, `i` is: 1
+
+`dataStart` Offset is: 0000022F77E8E7AC, `i` is: 2
+
+`dataStart` Offset is: 0000022F77E90BAC, `i` is: 5
+
+`dataStart` Offset is: 0000022F77E947AC, `i` is: 10
+
+`dataStart` Offset is: 0000022F77E977AC, `i` is: 14
+
+`dataStart` Offset is: 0000022F77E9B3AC, `i` is: 19
+
+`dataStart` Offset is: 0000022F77E9E3AC, `i` is: 23
+
+`dataStart` Offset is: 0000022F77EA1FAC, `i` is: 28
+
+`dataStart` Offset is: 0000022F77EA4FAC, `i` is: 32
+
+`dataStart` Offset is: 0000022F77EA7FAC, `i` is: 36
+
+`dataStart` Offset is: 0000022F77EABBAC, `i` is: 41
+
+`dataStart` Offset is: 0000022F77EAEBAC, `i` is: 45
+
+`dataStart` Offset is: 0000022F77EB27AC, `i` is: 50
+
+`dataStart` Offset is: 0000022F77EB63AC, `i` is: 55
+
+`dataStart` Offset is: 0000022F77EB93AC, `i` is: 59
+
+`dataStart` Offset is: 0000022F77EBCFAC, `i` is: 64
+
+`dataStart` Offset is: 0000022F77EBFFAC, `i` is: 68
+
+`dataStart` Offset is: 0000022F77EC3BAC, `i` is: 73
+
+`dataStart` Offset is: 0000022F77EC77AC, `i` is: 78
+
+`dataStart` Offset is: 0000022F77ECA7AC, `i` is: 82
+
+`dataStart` Offset is: 0000022F77ECE3AC, `i` is: 87
+
+`dataStart` Offset is: 0000022F77ED13AC, `i` is: 91
+
+`dataStart` Offset is: 0000022F77ED43AC, `i` is: 95
+
+`dataStart` Offset is: 0000022F77ED7FAC, `i` is: 100
+
+`dataStart` Offset is: 0000022F77EDAFAC, `i` is: 104
+
+`dataStart` Offset is: 0000022F77EDDFAC, `i` is: 108
+
+`dataStart` Offset is: 0000022F77EE1BAC, `i` is: 113
+
+`dataStart` Offset is: 0000022F77EE4BAC, `i` is: 117
+
+`dataStart` Offset is: 0000022F77EE63AC, `i` is: 119
+
+`dataStart` Offset is: 0000022F77EE6FAC, `i` is: 120
+
+Attempting to write JPEG data to file:
+Reconstructed data has been written to file successfully:
+
+Attempting to write buffer data to file:
+Main Buffer data has been written to file successfully:

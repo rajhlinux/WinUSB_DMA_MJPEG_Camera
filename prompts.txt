@@ -1,0 +1,77 @@
+I have this function of winusb which requests Isochronous-IN data, the data is DAMed into the buffer.
+The data is spanned through out the buffer.
+The `isochPackets` is a `PUSBD_ISO_PACKET_DESCRIPTOR` structure.
+The `isochPackets` contains each packet's address offset location in the buffer.
+So that locating the spanned data can be quickly reconstructed.
+
+After every call of the WinUsb_ReadIsochPipe() function, I need the program to quickly locate which packet has length variable specified and grab the data and place it in a different buffer call `reconstructed_buffer`.
+
+I need the program to only access data in the buffer which has a length specified.
+For example, packet 3 and 7, has a length specified, rest contains garbage data.
+So the program will first need to access the offset in packet 3, skip 12 bytes (because the first 12 bytes at every offset are header tags).
+While in the packet's offset, the program needs to search 2 bytes at a time, of header tag `0xFFD8`.
+If it finds `0xFFD8`, the program needs to copy everything from `0xFFD8` till the end of the offset (length-12), into another buffer called reconstructed_buffer.
+The program will then go to the next packet offset which has length and then need to search 2 bytes at a time for the tag `0xFFD9`, if it does not find it, it needs to keep copying the data into the reconstructed_buffer since these data is the body of the MJPEG.
+The program will continue doing this, until it finds the `0xFFD9` tag, once the program finds it, the program will stop copying and export the contents in the reconstructed_buffer to a file called jpeg.jpeg.
+
+To give an example what the structure of the isochPackets (PUSBD_ISO_PACKET_DESCRIPTOR) after data is DMAed into the buffer:
+
+Transfer 0:
+-----------
+Packet 0:
+  Offset: 0
+  Length: 0
+  Status: 0
+Packet 1:
+  Offset: 3072
+  Length: 0
+  Status: 0
+Packet 2:
+  Offset: 6144
+  Length: 0
+  Status: 0
+Packet 3:
+  Offset: 9216
+  Length: 3072
+  Status: 0
+Packet 4:
+  Offset: 12288
+  Length: 0
+  Status: 0
+Packet 5:
+  Offset: 15360
+  Length: 0
+  Status: 0
+Packet 6:
+  Offset: 18432
+  Length: 0
+  Status: 0
+Packet 7:
+  Offset: 21504
+  Length: 3072
+  Status: 0
+
+
+I want you to explain to me what you will do.
+
+Please note, the code needs to be for best low latency possible.
+
+Here is the sample code:
+
+```
+result = WinUsb_RegisterIsochBuffer(
+      DeviceData->AssociatedInterfaceHandle,
+      DeviceData->IsochInPipe,
+      readBuffer,
+      DeviceData->IsochInTransferSize * ISOCH_TRANSFER_COUNT,      
+      &isochReadBufferHandle);
+
+result = WinUsb_ReadIsochPipe(
+    isochReadBufferHandle,
+    DeviceData->IsochInTransferSize * i,
+    DeviceData->IsochInTransferSize,
+    &startFrame,
+    DeviceData->IsochInPacketCount,
+    &isochPackets[i * DeviceData->IsochInPacketCount],
+    &overlapped[i]);
+```
