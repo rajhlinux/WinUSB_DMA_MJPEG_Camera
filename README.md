@@ -8,4 +8,6 @@ Might need to update tune the timings (read main.cpp).
 Might also need to change the alternate settings in WinUSB (read main.cpp) for your specific UVC USB camera.
 You camera needs to stream MJPEG.
 
+Demostation of the custom WinUSB camera driver:
 
+https://youtu.be/q9qqtrwG-LU?si=HZrZJ2-SY8HN16Vj
